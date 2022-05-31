@@ -1,0 +1,3 @@
+[submodule "dataFoam"]
+	path = dataFoam
+	url = git@github.com:rmcconke/dataFoam.git
