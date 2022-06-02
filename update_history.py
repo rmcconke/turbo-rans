@@ -10,19 +10,16 @@ import json
 #remove this after development
 import random
 
-parser = argparse.ArgumentParser()
-parser.add_argument("-dir","--directory", help="directory for storing files", default = None)
-parser.add_argument("score", help="score to add to the history", type=float)
-args = parser.parse_args()
+
 
 def register_score(score, directory = None):
     if directory is None: directory = os.getcwd()
     
-    print(score)
+    #print(score)
     #Load suggested point
-    suggestion, file_suggestion = load_suggestion(directory)
-    print(suggestion)
-    coeff_bounds, file_coeff_bounds = load_coeff_bounds(directory)
+    suggestion = load_suggestion(directory)
+    #print(suggestion)
+    coeff_bounds = load_coeff_bounds(directory)
 
     optimizer = BayesianOptimization(
         f=None,
@@ -30,17 +27,28 @@ def register_score(score, directory = None):
         verbose=2,
         random_state=7,
     )
-    try: 
-        load_logs(optimizer, logs=[os.path.join(directory,"history.json")]);
-    except:
-        print(f'Could not load history from {os.path.join(directory,"history.json")}.\nFile does not exist or the number of coefficients has changed. Suggesting without considering history.')
+    
+    if os.path.exists(os.path.join(directory,"history.json")):
+        try: 
+            load_logs(optimizer, logs=[os.path.join(directory,"history.json")]);
+        except:
+            raise LookupError(f'Could not load history from {os.path.join(directory,"history.json")}.\nThe number of coefficients might have changed.')
+    else:
+        print(f'No history file exists at {os.path.join(directory,"history.json")}, creating and registering first point')
     logger = newJSONLogger(path=os.path.join(directory,"history.json"))
     optimizer.subscribe(Events.OPTIMIZATION_STEP, logger)
-    
-    #suggestion['a1'] = random.uniform(0.2, 0.8)
+    print(f'Registering score in {os.path.join(directory,"history.json")}')
     optimizer.register(params=suggestion, target=score)
+    
+    return
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-dir","--directory", help="directory for storing files", default = None)
+    parser.add_argument("score", help="score to add to the history", type=float)
+    parser.add_argument("-f", "--fff", help="a dummy argument to fool ipython", default="1")
+
+    args = parser.parse_args()
     register_score(score = args.score,
                    directory = args.directory)

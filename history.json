@@ -12,3 +12,4 @@
 {"target": 1.014124123213e-05, "params": {"a1": 0.49247101557012307}, "datetime": {"datetime": "2022-06-01 20:45:30", "elapsed": 0.0, "delta": 0.0}}
 {"target": 100.0, "params": {"a1": 0.412722557582128}, "datetime": {"datetime": "2022-06-01 20:45:35", "elapsed": 0.0, "delta": 0.0}}
 {"target": 5.0, "params": {"a1": 0.333802529548672}, "datetime": {"datetime": "2022-06-01 20:47:25", "elapsed": 0.0, "delta": 0.0}}
+{"target": 5.0, "params": {"a1": 0.4057754978787384}, "datetime": {"datetime": "2022-06-02 09:00:00", "elapsed": 0.0, "delta": 0.0}}
