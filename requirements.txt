@@ -70,7 +70,7 @@ pytz==2022.1
 pyzmq==23.0.0
 requests==2.27.1
 scikit-learn==1.1.1
-scipy==1.7.0
+scipy
 Send2Trash==1.8.0
 six==1.16.0
 sniffio==1.2.0
