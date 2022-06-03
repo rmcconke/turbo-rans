@@ -38,7 +38,10 @@ def register_score(score, directory = None):
     logger = newJSONLogger(path=os.path.join(directory,"history.json"))
     optimizer.subscribe(Events.OPTIMIZATION_STEP, logger)
     print(f'Registering score in {os.path.join(directory,"history.json")}')
-    optimizer.register(params=suggestion, target=score)
+    try:
+        optimizer.register(params=suggestion, target=score)
+    except:
+        print('Could not register score, maybe a duplicate point')
     
     return
 
