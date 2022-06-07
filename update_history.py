@@ -12,10 +12,8 @@ import random
 
 
 
-def register_score(score, directory = None):
-    if directory is None: directory = os.getcwd()
+def register_score(score, directory = os.getcwd()):
     
-    #print(score)
     #Load suggested point
     suggestion = load_suggestion(directory)
     #print(suggestion)
@@ -48,7 +46,7 @@ def register_score(score, directory = None):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("-dir","--directory", help="directory for storing files", default = None)
+    parser.add_argument("-dir","--directory", help="directory for storing files", default = os.getcwd())
     parser.add_argument("score", help="score to add to the history", type=float)
     parser.add_argument("-f", "--fff", help="a dummy argument to fool ipython", default="1")
 
