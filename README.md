@@ -77,7 +77,7 @@ Note that `update_history.py` has *one required argument:* `score`. This script 
 
 More information about the utility function can be found at the core BayesianOptimization documentation: https://github.com/fmfn/BayesianOptimization.
 
-**To use this code with your CFD solver, the only thing that needs to be implemented is calculation of the score function**. More information about the score function is given in the related paper. This code includes some examples in OpenFOAM and convenient solver-agnostic score functions in python, but we have left this open-ended to be more widely useful. We have *not* coupled the core `register_score` function tightly with an OpenFOAM-based score calculation function (though we have included some convenient scripts for OpenFOAM users).
+**To use this code with your CFD solver, the only thing that needs to be implemented is calculation of the score function**. More information about the score function is given in the related paper. This code includes some examples in OpenFOAM and convenient solver-agnostic score functions in python, but we have left this open-ended to be more widely useful. The core `register_score` function does *not* rely on any particular CFD solver (though we have included some convenient scripts for OpenFOAM users).
 
 
 # Examples

@@ -8,12 +8,26 @@ class newJSONLogger(JSONLogger) :
             super(JSONLogger, self).__init__()
             self._path = path if path[-5:] == ".json" else path + ".json"
 
-def write_json(directory, data, filename):
+def load_json(directory, filename):
     filename = f'{os.path.join(directory,filename)}'
+    with open(filename, "r+") as j:
+        data = json.load(j)
+    return data
+        
+def write_json(directory, data, filename, append=False):
+    filename = f'{os.path.join(directory,filename)}'
+    if append:
+        with open(filename) as f:
+            data = json.load(f)
+        data.update(a_dict)
     with open(filename, "w") as outfile:
         json.dump(data, outfile, indent = 4)
+        if append:
+            outfile.write('\n')
+        #consider f.write(json.dumps(data) + "\n") (dumps as well)
     return filename
-            
+
+# Rest of function should try to call the above two
 def write_coeff_bounds(directory, coeff_bounds):
     filename = write_json(directory=directory,
                           data=coeff_bounds,
@@ -36,21 +50,15 @@ def write_coeff_default(directory, coeff_default):
     return filename
 
 def load_coeff_bounds(directory):
-    filename = f'{os.path.join(directory,"coeff_bounds.json")}'
-    with open(filename, "r+") as j:
-        coeff_bounds = json.load(j)
+    coeff_bounds = load_json(directory, filename="coeff_bounds.json")
     return coeff_bounds
 
 def load_coeff_default(directory):
-    filename = f'{os.path.join(directory,"coeff_default.json")}'
-    with open(filename, "r+") as j:
-        coeff_default = json.load(j)
+    coeff_default = load_json(directory, filename="coeff_default.json")
     return coeff_default
 
 def load_suggestion(directory):
-    filename = f'{os.path.join(directory,"suggestion.json")}'
-    with open(filename, "r+") as j:
-        suggestion = json.load(j)
+    suggestion = load_json(directory, filename="suggestion.json")
     return suggestion
 
 def load_history_to_dict(directory, file):
