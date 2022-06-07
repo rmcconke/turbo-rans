@@ -3,7 +3,6 @@ import json
 from bayes_opt.logger import JSONLogger
 
 class newJSONLogger(JSONLogger) :
-
     def __init__(self, path):
             self._path=None
             super(JSONLogger, self).__init__()
@@ -62,3 +61,8 @@ def load_history_to_dict(directory, file):
             data.append(json.loads(line))
     return data
 
+def load_history_to_params_target(directory, file):
+    history = load_history_to_dict(directory,file)
+    param = [d['params']['a1'] for d in history]
+    target = [d['target'] for d in history]  
+    return param, target
