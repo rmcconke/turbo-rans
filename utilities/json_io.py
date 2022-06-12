@@ -1,6 +1,7 @@
 import os
 import json
 from bayes_opt.logger import JSONLogger
+from collections import defaultdict
 
 class newJSONLogger(JSONLogger) :
     def __init__(self, path):
@@ -16,14 +17,17 @@ def load_json(directory, filename):
         
 def write_json(directory, data, filename, append=False):
     filename = f'{os.path.join(directory,filename)}'
+    #if append:
+    #    with open(filename) as f:
+    #       data = json.load(f)
+    #    data.update(a_dict)
     if append:
-        with open(filename) as f:
-            data = json.load(f)
-        data.update(a_dict)
-    with open(filename, "w") as outfile:
-        json.dump(data, outfile, indent = 4)
-        if append:
-            outfile.write('\n')
+        with open(filename, "a") as outfile:
+            if append:
+                outfile.write(json.dumps(data) + '\n')
+    else:
+        with open(filename, "w") as outfile:
+            json.dump(data, outfile, indent = 4)
         #consider f.write(json.dumps(data) + "\n") (dumps as well)
     return filename
 
@@ -61,7 +65,7 @@ def load_suggestion(directory):
     suggestion = load_json(directory, filename="suggestion.json")
     return suggestion
 
-def load_history_to_dict(directory, file):
+def load_history_line_by_line(directory, file):
     data = []
     filename = f'{os.path.join(directory,file)}'
     with open(filename, "r+") as j:
@@ -69,8 +73,31 @@ def load_history_to_dict(directory, file):
             data.append(json.loads(line))
     return data
 
-def load_history_to_params_target(directory, file):
+def load_history_loss_log(directory, file):
+    losses_dict = defaultdict(list)
+    history = load_history_line_by_line(directory,file)
+    keys = history[0].keys()
+    for key in keys:
+        if key == 'params':
+            for param in history[0][key].keys():
+                loss_list = [d[key][param] for d in history]  
+                losses_dict[param]= loss_list
+        elif key == 'datetime':
+            pass
+        else: 
+            loss_list = [d[key] for d in history]  
+            losses_dict[key]= loss_list
+    return losses_dict
+
+# Delete these soon
+def sload_history_to_params_target(directory, file):
     history = load_history_to_dict(directory,file)
     param = [d['params']['a1'] for d in history]
     target = [d['target'] for d in history]  
+    return param, target
+
+def sload_loss_log_to_params_target(directory, file, target):
+    history = load_history_to_dict(directory,file)
+    param = [d['params']['a1'] for d in history]
+    target = [d[target] for d in history]  
     return param, target
