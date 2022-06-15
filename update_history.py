@@ -39,8 +39,9 @@ def register_score(score, directory = os.getcwd()):
     try:
         optimizer.register(params=suggestion, target=score)
     except:
-        print('Could not register score, maybe a duplicate point')
-    
+        suggestion = {k: v+random.uniform(0.00001, 0.0001) for k,v in suggestion.items()}
+        print('Could not register score, maybe a duplicate point. Adding small random value to search point.')
+        optimizer.register(params=suggestion, target=score)
     return
 
 
