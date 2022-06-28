@@ -38,8 +38,10 @@ httplib2==0.20.2
 idna==3.3
 importlib-metadata==4.11.4
 ipykernel==6.13.0
+ipympl==0.9.1
 ipython==8.4.0
 ipython-genutils==0.2.0
+ipywidgets==7.7.0
 jedi==0.18.1
 jeepney==0.7.1
 Jinja2==3.1.2
@@ -52,6 +54,7 @@ jupyter-server==1.17.0
 jupyterlab==3.4.2
 jupyterlab-pygments==0.2.2
 jupyterlab-server==2.14.0
+jupyterlab-widgets==1.1.0
 kernelstub==3.1.4
 keyring==23.5.0
 kiwisolver==1.4.2
@@ -59,6 +62,7 @@ language-selector==0.1
 launchpadlib==1.10.16
 lazr.restfulclient==0.14.4
 lazr.uri==1.0.6
+line-profiler==3.5.1
 livereload==2.6.3
 louis==3.20.0
 macaroonbakery==1.3.1
@@ -146,6 +150,7 @@ wadllib==1.3.6
 wcwidth==0.2.5
 webencodings==0.5.1
 websocket-client==1.3.2
+widgetsnbextension==3.6.0
 xdg==5
 xkit==0.0.0
 xlrd==1.2.0
