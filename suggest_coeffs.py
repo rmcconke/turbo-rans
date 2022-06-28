@@ -16,13 +16,19 @@ def suggest(directory = os.getcwd(),
         
     utility = UtilityFunction(kind=utility_kind, kappa=kappa, xi=xi)
     coeff_bounds = load_coeff_bounds(directory)
-       
-    optimizer = BayesianOptimization(
-        f=None,
-        pbounds=coeff_bounds,
-        verbose=2,
-        random_state=7,
-    )
+    if random_state is not None:
+        optimizer = BayesianOptimization(
+            f=None,
+            pbounds=coeff_bounds,
+            verbose=2,
+            random_state=random_state,
+        )
+    else:
+        optimizer = BayesianOptimization(
+            f=None,
+            pbounds=coeff_bounds,
+            verbose=2,
+        )
     if os.path.exists(os.path.join(directory,"history.json")):
         try: 
             load_logs(optimizer, logs=[os.path.join(directory,"history.json")]);

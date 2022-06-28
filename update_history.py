@@ -23,7 +23,7 @@ def register_score(score, directory = os.getcwd()):
         f=None,
         pbounds=coeff_bounds,
         verbose=2,
-        random_state=7,
+        random_state=0,
     )
     
     if os.path.exists(os.path.join(directory,"history.json")):
