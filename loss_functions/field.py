@@ -50,6 +50,11 @@ def multi_mape_U_magnitude_2Dxy_mape_k_relcoeff_mean(U_ref, U_sim_mapped, k_ref,
     mapek = mape_k(k_ref, k_sim_mapped)
     relcoeff = mean_relcoeff(coeff_dict, coeff_default)
     score = (mapeU + mapek)*(1+lda*relcoeff)
+    print(f'mapeU {mapeU}')
+    print(f'mapek {mapek}')
+    print(f'error_term {mapeU+mapek}')
+    print(f'relcoeff {relcoeff}')
+    print(f'score {score}')
     return score
 
 def multi_mape_U_magnitude_2Dxy_mape_k(U_ref, U_sim_mapped, k_ref, k_sim_mapped):

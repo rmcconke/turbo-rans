@@ -31,7 +31,7 @@ def write_json(directory, data, filename, append=False):
         #consider f.write(json.dumps(data) + "\n") (dumps as well)
     return filename
 
-# Rest of function should try to call the above two
+# Rest of functions should try to call the above two
 def write_coeff_bounds(directory, coeff_bounds):
     filename = write_json(directory=directory,
                           data=coeff_bounds,
@@ -88,16 +88,3 @@ def load_history_loss_log(directory, file):
             loss_list = [d[key] for d in history]  
             losses_dict[key]= loss_list
     return losses_dict
-
-# Delete these soon
-def sload_history_to_params_target(directory, file):
-    history = load_history_to_dict(directory,file)
-    param = [d['params']['a1'] for d in history]
-    target = [d['target'] for d in history]  
-    return param, target
-
-def sload_loss_log_to_params_target(directory, file, target):
-    history = load_history_to_dict(directory,file)
-    param = [d['params']['a1'] for d in history]
-    target = [d[target] for d in history]  
-    return param, target

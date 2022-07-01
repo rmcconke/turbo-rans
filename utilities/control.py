@@ -25,5 +25,4 @@ def initialize(directory = os.getcwd(),
             os.remove(os.path.join(directory,'suggestion.json'))
         except:
             print('Could not remove a file, it might not exist to start....')
-
     return
