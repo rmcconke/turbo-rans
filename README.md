@@ -15,7 +15,7 @@ Templates and examples for different use cases have been provided. These use cas
 
 For the `templates`, you need to implement the "black box" function for your solver. This function should roughly: read the suggestion.json file, run a CFD simulation with these coefficients, compute the scoring function, and return the score. Design of the scoring function is critical and is discussed in detail in the associated reference. Note that a python implementation of the scoring function from the reference paper has been provided in `scoring_functions`.
 
-The `examples` folder contains several examples and useful scripts for using the code with OpenFOAM. 
+The `examples` folder contains several examples and useful scripts for using the code with OpenFOAM, and can be used as a guide to implementing your solver-specific black box function.
 
 # Usage
 `suggest` takes a *mandatory* `coeff_bounds.json`, looks for an *optional* `history.json` (to consider previous evaluations), and then saves a `suggestion.json` file. Then, once the score function is known, `register_score` takes a *mandatory* score value, reads the `suggestion.json` file, and saves a `history.json` file that can be read by `BayesianOptimization`.
