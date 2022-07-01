@@ -1,5 +1,5 @@
 # turbo-rans: straightforward & efficient optimization of turbulence model coefficients
-
+![Airfoil](airfoil.png?raw=true "Airfoil")
 # Overview
 The core algorithm is:
 1. `suggest` reads the history file, and tells you what coefficients to use
