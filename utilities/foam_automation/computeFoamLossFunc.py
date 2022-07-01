@@ -5,6 +5,7 @@ from sklearn.metrics import mean_squared_error
 from sklearn.metrics import mean_absolute_percentage_error
 import numpy as np
 import pandas as pd
+from loss_functions.GEDCP import gedcp
 
 class computeFoamFieldLossFunc():
     def __init__(self, foamdir, ref_df, interp_method='nearest', read_cell_centres = True):
@@ -30,26 +31,29 @@ class computeFoamFieldLossFunc():
                                  self.ref_df[['x','y','z']],
                                  method=self.interp_method)
         return field_mapped
+    
     def read_force_coefficient(self,coef_name):
-        #foamdir = '/home/ryley/ML/foam/run/turbo-rans/bayesian_a1_betaStar_airfoil/airfoil_template'
-        #tunerdir = os.path.join(foamdir,'tuner')
-        #ref_df = pd.read_csv(os.path.join(tunerdir,'refdata.csv'))
-
-        #ref_df.describe()
-        #print(ref_df['Cl'][0])
-
         df = pd.read_csv(os.path.join(self.foamdir,'postProcessing/forceCoeffs1/0/coefficient_0.dat'),delimiter ='\t',skiprows = 12)
         df.columns = df.columns.str.replace(' ', '')
         return float(df[coef_name].iloc[-1])
         
-    def foam_general_loss_function(self, foamtime,
+    def foam_gedcp(self, foamtime,
                                      coef_default_dict,
                                      coef_dict,
                                      error_calc_fields,
                                      error_calc_intparams,
                                      lda_dict={'coef': 0.5},
                                      error_type = 'mape'):
+        """
+        Foam interface for GEDCP loss function in loss_functions
+        """
+        
         self.foamtime = foamtime
+        
+        field_sim_mapped_dict = dict.fromkeys(error_calc_fields)
+        field_ref_dict = dict.fromkeys(error_calc_fields)
+        integral_param_sim_dict = dict.fromkeys(error_calc_intparams)
+        integral_param_ref_dict = dict.fromkeys(error_calc_intparams)
         error_term = 0.0
         for field in error_calc_fields:
             if field == 'U':
@@ -61,111 +65,28 @@ class computeFoamFieldLossFunc():
             else:
                 raise NotImplemented(f'Field {field} error calculation not implemented')
                 
-            if error_type == 'mape':
-                error_i = mean_absolute_percentage_error(field_ref,field_sim_mapped)
-            elif error_type == 'mse':
-                error_i = mean_squared_error(field_ref,field_sim_mapped)
-            else: 
-                raise NotImplemented(f'Error type {error_type} calculation not implemented')
-                
-            if field in lda_dict.keys():
-                lda = lda_dict[field]
-            else: lda = 1.0
-            
-            error_term += lda*error_i
+            field_sim_mapped_dict[field] = field_sim_mapped
+            field_ref_dict[field] = field_ref
             
         for integral_parameter in error_calc_intparams:
             if integral_parameter == 'Cl':
                 integral_parameter_ref = float(self.ref_df[integral_parameter][0])
                 integral_parameter_sim = self.read_force_coefficient('Cl')
-                print(integral_parameter_ref)
-                print(integral_parameter_sim)
             elif integral_parameter == 'Cd':
                 integral_parameter_ref = self.ref_df[integral_parameter][0]
                 integral_parameter_sim = self.read_force_coefficient('Cd')
-                print(integral_parameter_ref)
-                print(integral_parameter_sim)     
-                
-            if error_type == 'mape':
-                error_i = mean_absolute_percentage_error([integral_parameter_ref],[integral_parameter_sim])
-            elif error_type == 'mse':
-                error_i = mean_squared_error([integral_parameter_ref],[integral_parameter_sim])
-            else: 
-                raise NotImplemented(f'Error type {error_type} calculation not implemented')
+            else:
+                raise NotImplemented(f'Int. parameter {integral_parameter} error calculation not implemented')   
+
+            integral_param_sim_dict[integral_parameter] = integral_parameter_sim
+            integral_param_ref_dict[integral_parameter] = integral_parameter_ref
         
-            if integral_parameter in lda_dict.keys():
-                lda = lda_dict[integral_parameter]
-            else: lda = 1.0
-            
-            error_term += lda*error_i
-                
-        coefs = np.asarray(list(coef_dict.values()))
-        defaults = np.asarray(list(coef_default_dict.values()))
-        coef_term = np.mean(
-            np.abs(
-            np.divide( (coefs - defaults),
-                  defaults)
-            ))
-        score = error_term*(1 + lda_dict['coef']*coef_term)
-        print(f'error_term {error_term}')
-        print(f'coef_term {coef_term}')
-        print(f'score {score}')
+        score = gedcp(field_sim_mapped_dict = field_sim_mapped_dict,
+                      field_ref_dict = field_ref_dict,
+                      integral_param_sim_dict = integral_param_sim_dict,
+                      integral_param_ref_dict = integral_param_ref_dict,
+                      coef_default_dict = coef_default_dict,
+                      coef_dict = coef_dict,
+                      lda_dict = {'coef': 0.5},
+                      error_type = 'mape')
         return score
-
-
-    
-"""
-    def foam_mse_U_componentwise_2Dxy(self,foamtime,lda=1.0):
-        self.foamtime = foamtime
-        loss = mse_U_componentwise_2Dxy(U_ref=self.ref_df[['Ux','Uy']].values,
-                                        U_sim_mapped=self.map_to_reference('U')[:,0:2],
-                                        )
-        return loss
-    
-    def foam_mse_U_magnitude_2Dxy(self,foamtime,lda=1.0):
-        self.foamtime = foamtime
-        loss = mse_U_magnitude_2Dxy(U_ref=self.ref_df[['Ux','Uy']].values,
-                                    U_sim_mapped=self.map_to_reference('U')[:,0:2],
-                                    )
-        return loss
-    
-    def foam_multi_mse_U_magnitude_2Dxy_relcoeff_mean(self,foamtime,coeff_dict,coeff_default,lda=1.0):
-        self.foamtime=foamtime
-        loss = multi_mse_U_magnitude_2Dxy_relcoeff_mean(U_ref=self.ref_df[['Ux','Uy']].values,
-                                                        U_sim_mapped=self.map_to_reference('U')[:,0:2],
-                                                        coeff_dict=coeff_dict,
-                                                        coeff_default=coeff_default,
-                                                        lda=lda)
-        
-        return loss
-    
-    def foam_multi_mape_U_magnitude_2Dxy_relcoeff_mean(self,foamtime,coeff_dict,coeff_default,lda=1.0):
-        self.foamtime=foamtime
-        loss = multi_mape_U_magnitude_2Dxy_relcoeff_mean(U_ref=self.ref_df[['Ux','Uy']].values,
-                                                        U_sim_mapped=self.map_to_reference('U')[:,0:2],
-                                                        coeff_dict=coeff_dict,
-                                                        coeff_default=coeff_default,
-                                                        lda=lda)
-        
-        return loss
-    
-    def foam_multi_mape_U_magnitude_2Dxy_mape_k_relcoeff_mean(self,foamtime,coeff_dict,coeff_default,lda=1.0):
-        self.foamtime=foamtime
-        loss = multi_mape_U_magnitude_2Dxy_mape_k_relcoeff_mean(U_ref=self.ref_df[['Ux','Uy']].values,
-                                                                U_sim_mapped=self.map_to_reference('U')[:,0:2],
-                                                                k_ref=self.ref_df['k'].values,
-                                                                k_sim_mapped=self.map_to_reference('k'),
-                                                                coeff_dict=coeff_dict,
-                                                                coeff_default=coeff_default,
-                                                                lda=lda)
-        return loss
-    
-    def foam_multi_mape_U_magnitude_2Dxy_mape_k(self,foamtime):
-        self.foamtime=foamtime
-        loss = multi_mape_U_magnitude_2Dxy_mape_k(U_ref=self.ref_df[['Ux','Uy']].values,
-                                                                U_sim_mapped=self.map_to_reference('U')[:,0:2],
-                                                                k_ref=self.ref_df['k'].values,
-                                                                k_sim_mapped=self.map_to_reference('k'),
-                                                                )
-        return loss
-"""
