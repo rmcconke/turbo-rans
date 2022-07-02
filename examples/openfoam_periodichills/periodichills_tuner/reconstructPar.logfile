@@ -1,0 +1,123 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2112                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _6e1fca0e-20220610 OPENFOAM=2112 patch=220610 version=2112
+Arch   : "LSB;label=32;scalar=64"
+Exec   : reconstructPar -latestTime -case periodichills_tuner
+Date   : Jul 02 2022
+Time   : 11:39:18
+Host   : pop-os
+PID    : 12990
+I/O    : uncollated
+Case   : /home/ryley/ML/turborans/examples/openfoam_periodichills/periodichills_tuner
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+--> FOAM Warning :
+    From void Foam::Time::setControls()
+    in file db/Time/Time.C at line 335
+    Reading "0/uniform/time" at line 18 to 26
+    Time read from time dictionary 20000 differs from actual time 0.
+    This may cause unexpected database behaviour. If you are not interested
+    in preserving time state delete the time dictionary.
+--> FOAM Warning :
+    From void Foam::Time::setControls()
+    in file db/Time/Time.C at line 335
+    Reading "processor0/0/uniform/time" at line 18 to 26
+    Time read from time dictionary 20000 differs from actual time 0.
+    This may cause unexpected database behaviour. If you are not interested
+    in preserving time state delete the time dictionary.
+--> FOAM Warning :
+    From void Foam::Time::setControls()
+    in file db/Time/Time.C at line 335
+    Reading "processor1/0/uniform/time" at line 18 to 26
+    Time read from time dictionary 20000 differs from actual time 0.
+    This may cause unexpected database behaviour. If you are not interested
+    in preserving time state delete the time dictionary.
+--> FOAM Warning :
+    From void Foam::Time::setControls()
+    in file db/Time/Time.C at line 335
+    Reading "processor2/0/uniform/time" at line 18 to 26
+    Time read from time dictionary 20000 differs from actual time 0.
+    This may cause unexpected database behaviour. If you are not interested
+    in preserving time state delete the time dictionary.
+--> FOAM Warning :
+    From void Foam::Time::setControls()
+    in file db/Time/Time.C at line 335
+    Reading "processor3/0/uniform/time" at line 18 to 26
+    Time read from time dictionary 20000 differs from actual time 0.
+    This may cause unexpected database behaviour. If you are not interested
+    in preserving time state delete the time dictionary.
+--> FOAM Warning :
+    From void Foam::Time::setControls()
+    in file db/Time/Time.C at line 335
+    Reading "processor4/0/uniform/time" at line 18 to 26
+    Time read from time dictionary 20000 differs from actual time 0.
+    This may cause unexpected database behaviour. If you are not interested
+    in preserving time state delete the time dictionary.
+--> FOAM Warning :
+    From void Foam::Time::setControls()
+    in file db/Time/Time.C at line 335
+    Reading "processor5/0/uniform/time" at line 18 to 26
+    Time read from time dictionary 20000 differs from actual time 0.
+    This may cause unexpected database behaviour. If you are not interested
+    in preserving time state delete the time dictionary.
+--> FOAM Warning :
+    From void Foam::Time::setControls()
+    in file db/Time/Time.C at line 335
+    Reading "processor6/0/uniform/time" at line 18 to 26
+    Time read from time dictionary 20000 differs from actual time 0.
+    This may cause unexpected database behaviour. If you are not interested
+    in preserving time state delete the time dictionary.
+--> FOAM Warning :
+    From void Foam::Time::setControls()
+    in file db/Time/Time.C at line 335
+    Reading "processor7/0/uniform/time" at line 18 to 26
+    Time read from time dictionary 20000 differs from actual time 0.
+    This may cause unexpected database behaviour. If you are not interested
+    in preserving time state delete the time dictionary.
+
+
+Reconstructing fields
+region=region0
+
+Time = 1225
+
+Reconstructing FV fields
+
+    Reconstructing volScalarFields
+
+        k
+        nut
+        omega
+        p
+        yPlus
+
+    Reconstructing volVectorFields
+
+        U
+
+    Reconstructing surfaceScalarFields
+
+        phi
+
+Reconstructing point fields
+
+No point fields
+
+No lagrangian fields
+
+No FA fields
+
+
+End
+

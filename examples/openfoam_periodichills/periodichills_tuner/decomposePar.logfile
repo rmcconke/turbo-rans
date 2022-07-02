@@ -1,0 +1,158 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2112                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _6e1fca0e-20220610 OPENFOAM=2112 patch=220610 version=2112
+Arch   : "LSB;label=32;scalar=64"
+Exec   : decomposePar -force -case periodichills_tuner
+Date   : Jul 02 2022
+Time   : 11:39:02
+Host   : pop-os
+PID    : 12929
+I/O    : uncollated
+Case   : /home/ryley/ML/turborans/examples/openfoam_periodichills/periodichills_tuner
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+--> FOAM Warning :
+    From void Foam::Time::setControls()
+    in file db/Time/Time.C at line 335
+    Reading "0/uniform/time" at line 18 to 26
+    Time read from time dictionary 20000 differs from actual time 0.
+    This may cause unexpected database behaviour. If you are not interested
+    in preserving time state delete the time dictionary.
+
+
+Decomposing mesh
+
+Create mesh
+
+Calculating distribution of cells
+Decomposition method scotch [8] (region region0)
+
+Finished decomposition in 0.02 s
+
+Calculating original mesh data
+
+Distributing cells to processors
+
+Distributing faces to processors
+
+Distributing points to processors
+
+Constructing processor meshes
+
+Processor 0
+    Number of cells = 1825
+    Number of faces shared with processor 1 = 72
+    Number of faces shared with processor 2 = 21
+    Number of faces shared with processor 3 = 41
+    Number of processor patches = 3
+    Number of processor faces = 134
+    Number of boundary faces = 3776
+
+Processor 1
+    Number of cells = 1855
+    Number of faces shared with processor 0 = 72
+    Number of faces shared with processor 2 = 37
+    Number of faces shared with processor 3 = 20
+    Number of processor patches = 3
+    Number of processor faces = 129
+    Number of boundary faces = 3761
+
+Processor 2
+    Number of cells = 1843
+    Number of faces shared with processor 0 = 21
+    Number of faces shared with processor 1 = 37
+    Number of faces shared with processor 3 = 66
+    Number of faces shared with processor 6 = 43
+    Number of faces shared with processor 7 = 15
+    Number of processor patches = 5
+    Number of processor faces = 182
+    Number of boundary faces = 3686
+
+Processor 3
+    Number of cells = 1837
+    Number of faces shared with processor 0 = 41
+    Number of faces shared with processor 1 = 20
+    Number of faces shared with processor 2 = 66
+    Number of faces shared with processor 6 = 14
+    Number of faces shared with processor 7 = 39
+    Number of processor patches = 5
+    Number of processor faces = 180
+    Number of boundary faces = 3748
+
+Processor 4
+    Number of cells = 1840
+    Number of faces shared with processor 5 = 74
+    Number of faces shared with processor 6 = 4
+    Number of faces shared with processor 7 = 55
+    Number of processor patches = 3
+    Number of processor faces = 133
+    Number of boundary faces = 3813
+
+Processor 5
+    Number of cells = 1859
+    Number of faces shared with processor 4 = 74
+    Number of faces shared with processor 6 = 49
+    Number of faces shared with processor 7 = 7
+    Number of processor patches = 3
+    Number of processor faces = 130
+    Number of boundary faces = 3770
+
+Processor 6
+    Number of cells = 1835
+    Number of faces shared with processor 2 = 43
+    Number of faces shared with processor 3 = 14
+    Number of faces shared with processor 4 = 4
+    Number of faces shared with processor 5 = 49
+    Number of faces shared with processor 7 = 68
+    Number of processor patches = 5
+    Number of processor faces = 178
+    Number of boundary faces = 3670
+
+Processor 7
+    Number of cells = 1857
+    Number of faces shared with processor 2 = 15
+    Number of faces shared with processor 3 = 39
+    Number of faces shared with processor 4 = 55
+    Number of faces shared with processor 5 = 7
+    Number of faces shared with processor 6 = 68
+    Number of processor patches = 5
+    Number of processor faces = 184
+    Number of boundary faces = 3774
+
+Number of processor faces = 625
+Max number of cells = 1859 (0.820283% above average 1843.88)
+Max number of processor patches = 5 (25% above average 4)
+Max number of faces between processors = 184 (17.76% above average 156.25)
+
+Time = 0
+
+Processor 0: field transfer
+Detected additional non-decomposed files in "/home/ryley/ML/turborans/examples/openfoam_periodichills/periodichills_tuner/0/uniform"
+Processor 1: field transfer
+Detected additional non-decomposed files in "/home/ryley/ML/turborans/examples/openfoam_periodichills/periodichills_tuner/0/uniform"
+Processor 2: field transfer
+Detected additional non-decomposed files in "/home/ryley/ML/turborans/examples/openfoam_periodichills/periodichills_tuner/0/uniform"
+Processor 3: field transfer
+Detected additional non-decomposed files in "/home/ryley/ML/turborans/examples/openfoam_periodichills/periodichills_tuner/0/uniform"
+Processor 4: field transfer
+Detected additional non-decomposed files in "/home/ryley/ML/turborans/examples/openfoam_periodichills/periodichills_tuner/0/uniform"
+Processor 5: field transfer
+Detected additional non-decomposed files in "/home/ryley/ML/turborans/examples/openfoam_periodichills/periodichills_tuner/0/uniform"
+Processor 6: field transfer
+Detected additional non-decomposed files in "/home/ryley/ML/turborans/examples/openfoam_periodichills/periodichills_tuner/0/uniform"
+Processor 7: field transfer
+Detected additional non-decomposed files in "/home/ryley/ML/turborans/examples/openfoam_periodichills/periodichills_tuner/0/uniform"
+
+End
+

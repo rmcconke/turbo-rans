@@ -1,7 +1,7 @@
 import argparse
 import os
 from bayes_opt import UtilityFunction
-from utilities.json_io import load_coeff_bounds, write_suggestion
+from turborans.utilities.json_io import load_coeff_bounds, write_suggestion
 from bayes_opt import BayesianOptimization
 from bayes_opt.util import load_logs
 import json

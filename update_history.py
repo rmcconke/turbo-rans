@@ -1,10 +1,9 @@
 import argparse
 import os
-from bayes_opt import UtilityFunction
+from bayes_opt import UtilityFunction, BayesianOptimization
 from bayes_opt.event import Events
-from utilities.json_io import load_suggestion, load_coeff_bounds, newJSONLogger
-from bayes_opt import BayesianOptimization
 from bayes_opt.util import load_logs
+from turborans.utilities.json_io import load_suggestion, load_coeff_bounds, newJSONLogger
 import json
 import logging
 import random

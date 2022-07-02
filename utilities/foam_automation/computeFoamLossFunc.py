@@ -5,7 +5,7 @@ from sklearn.metrics import mean_squared_error
 from sklearn.metrics import mean_absolute_percentage_error
 import numpy as np
 import pandas as pd
-from loss_functions.GEDCP import gedcp
+from turborans.loss_functions.GEDCP import gedcp
 
 class computeFoamFieldLossFunc():
     def __init__(self, foamdir, ref_df, interp_method='nearest', read_cell_centres = True):

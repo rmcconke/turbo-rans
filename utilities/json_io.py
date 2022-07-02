@@ -49,15 +49,15 @@ def write_coeff_default(directory, coeff_default):
     logging.info(f'Saving coeff_default to {filename}')
     return filename
 
-def load_coeff_bounds(directory):
+def load_coeff_bounds(directory=os.getcwd()):
     coeff_bounds = load_json(directory, filename="coeff_bounds.json")
     return coeff_bounds
 
-def load_coeff_default(directory):
+def load_coeff_default(directory=os.getcwd()):
     coeff_default = load_json(directory, filename="coeff_default.json")
     return coeff_default
 
-def load_suggestion(directory):
+def load_suggestion(directory=os.getcwd()):
     suggestion = load_json(directory, filename="suggestion.json")
     return suggestion
 
