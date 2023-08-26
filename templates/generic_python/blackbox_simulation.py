@@ -9,7 +9,7 @@ def blackbox_simulation(coef_dict):
     
     # This scoring function should be computed with the simulation results, but for now just returns the sum of the provided coefficients
     print('blackbox function computing score')
-    score = sum(coef_dict.values())
+    score = sum(coef_dict.values()) # turborans.loss_functions contains some loss functions you can use
     print(f'score: {score}')
     
     return score

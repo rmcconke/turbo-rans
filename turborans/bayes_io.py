@@ -10,11 +10,12 @@ import os
 from bayes_opt import UtilityFunction, BayesianOptimization
 from bayes_opt.event import Events
 from bayes_opt.util import load_logs
-from turborans.utilities.json_io import load_suggestion, load_coeff_bounds, newJSONLogger
+from turborans.utilities.json_io import load_suggestion, load_coeff_bounds, newJSONLogger, load_history_loss_log
 import json
 import logging
 import random
 import os
+import pandas as pd
 
 def suggest(directory = os.getcwd(), 
             kappa: float = 2.0, 
@@ -105,3 +106,28 @@ def register_score(score: float, directory = os.getcwd()):
         logging.warning('Could not register score, maybe a duplicate point. Adding small random value to search point.')
         optimizer.register(params=suggestion, target=score)
     return
+
+def summarize(directory, save_csv=True):
+    history_file = os.path.join(directory,'history.json')
+    if not os.path.exists(history_file):
+        raise LookupError(f'Could not find {history_file}.')
+    
+    df_history = pd.DataFrame(load_history_loss_log(directory,'history.json'))
+    df_history.index.name='iteration'
+    df_history.sort_values(by='target',ascending=False,inplace=True)
+    print(f'===============turbo-RANS search summary===============')
+    print(f'Search start: {min(df_history["datetime"])}')
+    print(f'Search end:   {max(df_history["datetime"])}')
+    print(f'Iterations:   {len(df_history)}')
+    print(f'Best target:  {df_history["target"].head(1).to_string(index=False)}')
+
+    print(f'Best parameters: \n*******************\n{df_history.drop(["target","datetime"],axis=1).head(1).to_string(index=False)}\n*******************')
+    
+    print('Search table sorted by target:')
+    print(df_history)
+    if save_csv:
+        logging.info('Saving summary results to history.csv')
+        df_history.to_csv(os.path.join(directory,'history_sorted.csv'))
+
+
+

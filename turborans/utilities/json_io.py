@@ -79,7 +79,8 @@ def load_history_loss_log(directory, file):
                 loss_list = [d[key][param] for d in history]  
                 losses_dict[param]= loss_list
         elif key == 'datetime':
-            pass
+            date_list = [d[key]['datetime'] for d in history]  
+            losses_dict[key]= date_list
         else: 
             loss_list = [d[key] for d in history]  
             losses_dict[key]= loss_list
