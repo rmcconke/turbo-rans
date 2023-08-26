@@ -14780,7 +14780,7 @@ boundaryField
     bottomWall
     {
         type            omegaWallFunction;
-        blending        binomial2;
+        blending        binomial;
         n               2;
         beta1           0.075;
         value           nonuniform List<scalar> 
@@ -14903,7 +14903,7 @@ boundaryField
     topWall
     {
         type            omegaWallFunction;
-        blending        binomial2;
+        blending        binomial;
         n               2;
         beta1           0.075;
         value           nonuniform List<scalar> 
