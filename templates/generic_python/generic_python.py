@@ -1,15 +1,18 @@
 from blackbox_simulation import blackbox_simulation
-from turborans.suggest_coeffs import suggest
-from turborans.update_history import register_score
-from turborans.utilities.json_io import load_suggestion
+import turborans
+
+# Uncomment to see python logging info
+#import logging
+#logging.basicConfig()
+#logging.getLogger().setLevel(logging.DEBUG)
 
 # To reset the optimization, delete history.json and suggestion.json
 
-iterations=15
+iterations=30
 
 for i in range(iterations):
     print(f'===== Iteration: {i} =====')
-    suggest()
-    search_point = load_suggestion()
+    turborans.suggest()
+    search_point = turborans.utilities.json_io.load_suggestion()
     score = blackbox_simulation(search_point)
-    register_score(score = score)
+    turborans.register_score(score = score)
