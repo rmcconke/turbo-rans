@@ -1,2 +1,2 @@
-from ._suggest import suggest
-from ._register_score import register_score
+from .bayes_io import suggest, register_score
+

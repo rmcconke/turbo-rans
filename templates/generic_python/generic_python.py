@@ -12,7 +12,7 @@ iterations=30
 
 for i in range(iterations):
     print(f'===== Iteration: {i} =====')
-    turborans.suggest()
+    turborans.bayes_io.suggest()
     search_point = turborans.utilities.json_io.load_suggestion()
     score = blackbox_simulation(search_point)
-    turborans.register_score(score = score)
+    turborans.bayes_io.register_score(score = score)
