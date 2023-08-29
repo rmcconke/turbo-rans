@@ -107,7 +107,7 @@ def register_score(score: float, directory = os.getcwd()):
         optimizer.register(params=suggestion, target=score)
     return
 
-def summarize(directory, save_csv=True):
+def summarize(directory = os.getcwd(), save_csv=True):
     history_file = os.path.join(directory,'history.json')
     if not os.path.exists(history_file):
         raise LookupError(f'Could not find {history_file}.')

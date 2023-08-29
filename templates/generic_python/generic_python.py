@@ -1,6 +1,5 @@
 from blackbox_simulation import blackbox_simulation
 import turborans
-
 # Uncomment to see python logging info
 #import logging
 #logging.basicConfig()
@@ -16,3 +15,5 @@ for i in range(iterations):
     search_point = turborans.utilities.json_io.load_suggestion()
     score = blackbox_simulation(search_point)
     turborans.bayes_io.register_score(score = score)
+
+turborans.bayes_io.summarize()
