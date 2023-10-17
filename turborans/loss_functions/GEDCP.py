@@ -19,7 +19,7 @@ def gedcp(field_sim_mapped_dict = {},
 
             Parameters:
                     field_sim_mapped_dict: A dictionary of field names and corresponding field values (should already be mapped onto the reference locations). e.g. {'U': array_U, 'k': array_k}
-                    field_ref_dict: A dictionary of field names and reference values e.g {'U': array_U+ref, 'k': array_k_ref}
+                    field_ref_dict: A dictionary of field names and reference values e.g {'U': array_U_ref, 'k': array_k_ref}
                     integral_param_sim_dict: A dictionary of integral parameters and values from simulation, e.g. {'Cl': 1.5, 'Cd': 0.1}
                     integral_param_sim_dict: A dictionary of integral parameters and values from reference, e.g. {'Cl': 1.3, 'Cd': 0.12}
                     coef_default_dict: A dictionary of default coefficient values, e.g. {'a1': 0.31, 'betaStar': 0.09}
