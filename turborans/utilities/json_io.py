@@ -10,6 +10,7 @@ class newJSONLogger(JSONLogger) :
             super(JSONLogger, self).__init__()
             self._path = path if path[-5:] == ".json" else path + ".json"
 
+
 def load_json(directory, filename):
     filename = f'{os.path.join(directory,filename)}'
     with open(filename, "r+") as j:
@@ -48,6 +49,10 @@ def write_coeff_default(directory, coeff_default):
                           filename="coeff_default.json")
     logging.info(f'Saving coeff_default to {filename}')
     return filename
+
+def load_coeff_file(directory=os.getcwd()):
+    coeffs = load_json(directory, filename="coefficients.json")
+    return coeffs
 
 def load_coeff_bounds(directory=os.getcwd()):
     coeff_bounds = load_json(directory, filename="coeff_bounds.json")

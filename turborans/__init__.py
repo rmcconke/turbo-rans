@@ -1,2 +1,2 @@
-from .bayes_io import suggest, register_score
+from .bayes_io import optimizer
 

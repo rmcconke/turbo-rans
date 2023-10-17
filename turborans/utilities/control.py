@@ -1,29 +1,22 @@
-import os
-from turborans.utilities.json_io import write_coeff_bounds, write_coeff_default
 import logging
+import os
 
-def initialize(directory = os.getcwd(),
-               coeff_bounds = None,
-               coeff_default = None,
-               restart = False):
-    """
-    An optional utility for restarting/writing intial coefficient bounds files. Useful for python scripting.
-    """
-    if coeff_bounds is None:
-        logging.info(f'Did not get coefficient bounds dict for initialization, assuming coeff_bounds.json exists in {directory}')
-    else:
-        write_coeff_bounds(directory, coeff_bounds)
-        
-    if coeff_default is None:
-        logging.info(f'Did not get coefficient default dict for initialization, assuming coeff_default.json exists in {directory} or is not needed')
-    else:
-        write_coeff_default(directory, coeff_default)
-        
-    if restart: 
+def reset(directory, reset_settings = False):
+    logging.info('Removing old history and suggestion files....')
+    try:
+        os.remove(os.path.join(directory,'history.json'))
+    except: 
+        logging.info('Could not remove history.json, it might not exist to start....')
+    try:
+        os.remove(os.path.join(directory,'suggestion.json'))
+    except: 
+        logging.info('Could not remove suggestion.json, it might not exist to start....')
+    try:
+        os.remove(os.path.join(directory,'mode.json'))
+    except:
+        logging.info('Could not remove mode.json, it might not exist to start....')
+    if reset_settings:
         try:
-            logging.info('Removing old history and suggestion files....')
-            os.remove(os.path.join(directory,'history.json'))
-            os.remove(os.path.join(directory,'suggestion.json'))
+            os.remove(os.path.join(directory,'settings.json'))
         except:
-            logging.info('Could not remove a file, it might not exist to start....')
-    return
+            logging.info('Could not remove mode.json, it might not exist to start....')
