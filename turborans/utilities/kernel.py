@@ -26,17 +26,20 @@ def get_optimizer(coeff_bounds, relative_lengthscale, relative_lengthscale_bound
             pbounds=coeff_bounds,
             verbose=2,
             random_state=random_state,
+            allow_duplicate_points=True
         )
     else:
         optimizer = BayesianOptimization(
             f=None,
             pbounds=coeff_bounds,
             verbose=2,
+            allow_duplicate_points=True
         )
     ls, ls_bounds = derive_length_scales(coeff_bounds, length_scale_delta=relative_lengthscale,
                                          length_scale_bounds_delta=relative_lengthscale_bounds)
     
     optimizer.set_gp_params(kernel=Matern(length_scale = ls,
                                           length_scale_bounds=ls_bounds,
-                                          nu=nu))
+                                          nu=nu),
+                            random_state=random_state)
     return optimizer        

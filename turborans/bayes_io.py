@@ -26,7 +26,8 @@ import numpy as np
 
 
 class optimizer():
-    settings = {'force_restart': False,
+    settings = {
+                'force_restart': False,
                 'start_with_defaults_if_given': True,
                 'json_mode': False,
                 'n_samples': 10,
@@ -36,7 +37,8 @@ class optimizer():
                 'bo_xi': 0.1,
                 'kernel_relative_lengthscale': 0.1,
                 'kernel_relative_lengthscale_bounds': [1E-2,1E1],
-                'kernel_nu': 5/2}
+                'kernel_nu': 5/2
+                }
 
     def __init__(self,
                  coeffs = None, 
@@ -77,6 +79,7 @@ class optimizer():
                                                 relative_lengthscale=self.settings['kernel_relative_lengthscale'],
                                                 relative_lengthscale_bounds=self.settings['kernel_relative_lengthscale_bounds'],
                                                 nu=self.settings['kernel_nu'],
+                                                random_state=self.settings['random_state']
                                                 )
         self.infer_current_iteration()
         self.set_mode()
@@ -113,7 +116,7 @@ class optimizer():
             self.mode = mode
 
     def generate_samples(self, n_samples):
-        qrng = qmc.Sobol(d=len(self.coeffs['bounds'].keys()))
+        qrng = qmc.Sobol(d=len(self.coeffs['bounds'].keys()), seed=self.settings['random_state'])
         self.samples = qrng.random(n=2**(int(np.log2(n_samples))+1))
         for i,bounds in enumerate(self.coeffs['bounds'].values()):
             self.samples[:,i] = bounds[0] + self.samples[:,i]*(bounds[1]-bounds[0])

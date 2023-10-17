@@ -1,19 +1,38 @@
 from blackbox_simulation import blackbox_simulation
-import turborans
+from turborans.bayes_io import optimizer
+from turborans.utilities.analysis import summarize
+from turborans.utilities.control import reset
+
 # Uncomment to see python logging info
 #import logging
 #logging.basicConfig()
 #logging.getLogger().setLevel(logging.DEBUG)
 
-# To reset the optimization, delete history.json and suggestion.json
-
 iterations=30
+
+# coeffs is a dict containing 'default' values (optional), and 'bounds' (required)
+
+turborans = optimizer(coeffs= {'default': {
+                                            'a1': 0.31,
+                                           },
+                               'bounds': {
+                                            'a1': [0.25,0.4],
+                                            }},
+                        settings= {'force_restart': True,
+                                   'random_state': 7})
 
 for i in range(iterations):
     print(f'===== Iteration: {i} =====')
-    turborans.bayes_io.suggest()
-    search_point = turborans.utilities.json_io.load_suggestion()
-    score = blackbox_simulation(search_point)
-    turborans.bayes_io.register_score(score = score)
+    suggestion = turborans.suggest()
+    score = blackbox_simulation(suggestion)
+    turborans.register_score(score=score, coefficients=suggestion)
 
-turborans.bayes_io.summarize()
+summarize(turborans)
+
+
+
+
+
+
+
+

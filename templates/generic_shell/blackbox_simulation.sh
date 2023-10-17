@@ -1,5 +1,7 @@
+#!/bin/bash
+
 # This is a placeholder for a script which runs a CFD simulation using a given set of coefficients, and computes a loss function.
-echo "blackbox function got coefficients: `cat suggestion.json | jq`">&2
+echo -e "\nblackbox function got coefficients: `cat suggestion.json | jq`">&2
 
 # Insert code to run simulation here
 echo "blackbox function running simulation">&2

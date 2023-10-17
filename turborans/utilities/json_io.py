@@ -28,44 +28,6 @@ def write_json(directory, data, filename, append=False):
             json.dump(data, outfile, indent = 4)
     return filename
 
-# Rest of functions should try to call the above two
-def write_coeff_bounds(directory, coeff_bounds):
-    filename = write_json(directory=directory,
-                          data=coeff_bounds,
-                          filename="coeff_bounds.json")
-    logging.info(f'Saving coeff_bounds to {filename}')
-    return filename
-
-def write_suggestion(directory, suggestion):
-    filename = write_json(directory=directory,
-                          data=suggestion,
-                          filename="suggestion.json")
-    logging.info(f'Saving suggestion to {filename}')
-    return filename
-
-def write_coeff_default(directory, coeff_default):
-    filename = write_json(directory=directory,
-                          data=coeff_default,
-                          filename="coeff_default.json")
-    logging.info(f'Saving coeff_default to {filename}')
-    return filename
-
-def load_coeff_file(directory=os.getcwd()):
-    coeffs = load_json(directory, filename="coefficients.json")
-    return coeffs
-
-def load_coeff_bounds(directory=os.getcwd()):
-    coeff_bounds = load_json(directory, filename="coeff_bounds.json")
-    return coeff_bounds
-
-def load_coeff_default(directory=os.getcwd()):
-    coeff_default = load_json(directory, filename="coeff_default.json")
-    return coeff_default
-
-def load_suggestion(directory=os.getcwd()):
-    suggestion = load_json(directory, filename="suggestion.json")
-    return suggestion
-
 def load_history_line_by_line(directory, file):
     data = []
     filename = f'{os.path.join(directory,file)}'
