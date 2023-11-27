@@ -135,3 +135,4 @@ pyfoamtesting
 
 env_turborans
 *__pycache__*
+.vscode
