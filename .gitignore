@@ -134,3 +134,4 @@ pyfoamtesting
 *.gif
 
 env_turborans
+*__pycache__*

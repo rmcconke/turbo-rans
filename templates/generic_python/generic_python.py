@@ -1,7 +1,6 @@
 from blackbox_simulation import blackbox_simulation
 from turborans.bayes_io import optimizer
 from turborans.utilities.analysis import summarize
-from turborans.utilities.control import reset
 
 # Uncomment to see python logging info
 #import logging
@@ -11,15 +10,17 @@ from turborans.utilities.control import reset
 iterations=30
 
 # coeffs is a dict containing 'default' values (optional), and 'bounds' (required)
+# You can supply the coeffs to the optimizer constructor. They will be automatically be written to coefficients.json.
+# You can also just include a coefficients.json file instead, and they will be read from that.
 
 turborans = optimizer(coeffs= {'default': {
-                                            'a1': 0.31,
+                                            'x': .5,
                                            },
                                'bounds': {
-                                            'a1': [0.25,0.4],
+                                            'x': [-1, 1],
                                             }},
-                        settings= {'force_restart': True,
-                                   'random_state': 7})
+                        #Optionally fix random seed : settings= {'random_state': 7}
+                    )
 
 for i in range(iterations):
     print(f'===== Iteration: {i} =====')

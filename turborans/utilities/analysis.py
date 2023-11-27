@@ -6,6 +6,7 @@ import logging
 import numpy as np
 
 def get_best_score_trend(df):
+    """ Determines best objective function value at a given iteration."""
     best_target = df['target'][0]
     best_targets = []
     for i, target in enumerate(df['target']):
@@ -16,6 +17,7 @@ def get_best_score_trend(df):
     return df
 
 def plot_history(directory,df_history):
+    """ Plots best objective function value vs iteration."""
     fig,ax = plt.subplots(1,2,figsize=(10,5))
     ax[0].plot(df_history.index,df_history['target'])
     ax[0].set_xlabel('Iteration')
@@ -27,6 +29,8 @@ def plot_history(directory,df_history):
     fig.savefig(os.path.join(directory,'turborans_target_history.png'),dpi=300)
 
 def summarize(turborans_optimizer, detailed_results = True):
+    """ Prints a summary of the optimization results, and plots the target history.
+    If detailed_results = True, saves the sorted history file sorted by score to turborans_history_sorted.csv."""
     if turborans_optimizer.settings['json_mode']:
         history_file = os.path.join(turborans_optimizer.directory,'history.json')
         if not os.path.exists(history_file):

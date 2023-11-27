@@ -2,7 +2,7 @@ import numpy as np
 import os
 import pandas as pd
 from turborans.utilities.foam_automation.caserunner import run_until_convergence, get_endtime
-from turborans.utilities.foam_automation.foamLossFunc import foamFieldLossFunc
+from turborans.utilities.foam_automation.foamObjectiveFunc import foamFieldObjectiveFunc
 from turborans.utilities.foam_automation.set_foam_coeff import set_foam_coef
 from turborans.utilities.analysis import summarize
 
@@ -14,13 +14,13 @@ savedir = 'periodichills_opt' # Directory for saving the best results
 
 tunerdir = 'periodichills_tuner' # Directory for turbo-rans files
 
-iterations = 10 # For loop could also be changed to run until some sort of convergence or loss function tolerance
+iterations = 10 # For loop could also be changed to run until some sort of convergence or objective function tolerance
 
 ref_df = pd.read_csv(os.path.join(tunerdir,'refdata.csv')) # See refdata.csv for file format, sparse or dense unstructured (x, y, z,...) field data
 
-foamLoss = foamFieldLossFunc(foamdir=foamdir,
+foamObj = foamFieldObjectiveFunc(foamdir=foamdir,
                                     ref_df=ref_df,
-                                    interp_method='nearest') #Convenient class for handling loss function computation using field data
+                                    interp_method='nearest') #Convenient class for handling objective function computation using field data
 np.random.seed(7)
 score_best = 1E6 
 
@@ -34,6 +34,7 @@ turborans = optimizer(coeffs= {'default': {
                                             }},
                         turborans_directory = tunerdir,
                         settings= {'force_restart': True,
+                                   'json_mode': False,
                                    'random_state': 7,
                                    'n_samples': 5})
 
@@ -44,7 +45,7 @@ for i in range(iterations):
     print(search_point)
     set_foam_coef(foamdir,search_point) # Writes the turbulence model coefficients to constant/turbulenceProperties
     last_time = run_until_convergence(case=foamdir, n_proc = 8) # PyFoam convergence runner
-    score = -foamLoss.foam_gedcp(foamtime=last_time,
+    score = foamObj.foam_gedcp(foamtime=last_time,
                                                    coef_default_dict = turborans.coeffs['default'],
                                                    coef_dict=search_point,
                                                    error_calc_fields=['U','k'],

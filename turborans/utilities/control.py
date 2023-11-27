@@ -2,6 +2,7 @@ import logging
 import os
 
 def reset(directory, reset_settings = False):
+    """ Reset a given turborans_directory by removing all previous history.json, suggestion.json, and mode.json. Optionally removes settings.json (which resets to default settings)."""
     logging.info('Removing old history and suggestion files....')
     try:
         os.remove(os.path.join(directory,'history.json'))

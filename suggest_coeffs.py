@@ -10,7 +10,7 @@ if __name__ == '__main__':
     parser.add_argument('--force_restart', help="Restart the optimization before making a suggestion.", default=False, action='store_true')
     parser.add_argument('--start_with_defaults_if_given', help="For the first suggestion, return default coefficients if they are provided.", default=True, action='store_false')
     parser.add_argument("-n_samples","--n_samples", help="Number of points to sample before calling the Bayesian optimizer.", type=int, default = 10)
-    parser.add_argument("-rs","--random_state", help="random state for optimizer.", default = None)
+    parser.add_argument("-rs","--random_state", help="random state for optimizer.", default = None, type=int)
     parser.add_argument("-u","--utility_kind", help="utility function kind: ucb, ei, or poi.", default = 'ucb')
     parser.add_argument("-k","--kappa", help="kappa parameter for utility function UCB. Higher values (e.g. 10) prefer exploration, lower values (e.g. 1) prefer exploitation. ", type=float, default = 2.0)
     parser.add_argument("-xi","--xi", help="xi parameter for utility functions EI and POI. Higher values (e.g. 0.1) prefer exploration, lower values (e.g. 1E-4) prefer exploitation.", type=float, default = 0.1)

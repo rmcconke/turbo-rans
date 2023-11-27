@@ -20,6 +20,7 @@ def derive_length_scales(bounds: dict, length_scale_delta: float = 0.1, length_s
     return bayes_length_scales, bayes_length_scale_bounds
     
 def get_optimizer(coeff_bounds, relative_lengthscale, relative_lengthscale_bounds, nu, random_state=None):
+    """ Interface to the bayes_opt library. Returns a bayesian optimizer with given GP kernel settings."""
     if random_state is not None:
         optimizer = BayesianOptimization(
             f=None,
